@@ -30,3 +30,31 @@ var ros = new ROSLIB.Ros({
     console.log(m.res_time);
     document.getElementById("t").innerHTML = m.res_time;
   });
+
+
+  cmd_vel_listener = new ROSLIB.Topic({
+    ros : ros,
+    name : "/cmd_vel",
+    messageType : 'std_msgs/String'
+  });
+
+  move = function () {
+    var twist = new ROSLIB.Message({data : data.replace("ok", "")});
+    cmd_vel_listener.publish(twist);
+  }
+
+
+
+  var j_listener = new ROSLIB.Topic({
+    ros : ros,
+    name : 'topic_2',
+    messageType : 'res_msgs/ResDimension'
+  });
+
+  j_listener.subscribe(function(m) {
+    document.getElementById("msg1").innerHTML = m.file_name;
+    document.getElementById("v1").innerHTML = m.vm[0];
+    document.getElementById("m1").innerHTML = m.vm[1];
+    console.log(m.res_time);
+    document.getElementById("t1").innerHTML = m.res_time;
+  });

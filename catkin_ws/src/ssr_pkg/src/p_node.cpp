@@ -1,6 +1,8 @@
 #include <ros/ros.h>
 #include <std_msgs/String.h>
 #include <res_msgs/ResDimension.h>
+#include <stdio.h>
+#include <time.h>
 
 
 int main(int argc, char  *argv[])
@@ -18,8 +20,9 @@ int main(int argc, char  *argv[])
         res_msgs::ResDimension msg;
         msg.file_name = "confetti.jpg";
         // valence is index0, emotion is index 1 in vector vm
-        msg.vm.push_back(10);
-        msg.vm.push_back(2);
+        srand(time(NULL));
+        msg.vm.push_back(rand()%10+1);
+        msg.vm.push_back(rand()%10+1);
         msg.res_time = ros::Time::now().toSec();
         pub.publish(msg);
         loop_rate.sleep();
